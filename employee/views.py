@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect
 from django.views.generic import View
 
-from employee.form import EmployeeForm
-from employee.models import Employee
+from employee.form import EmployeeForm,SignUpForm,SignInForm
+from employee.models import Employee 
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -87,8 +88,44 @@ class EmployeeUpdateView(View):
             return redirect("employee-list")
         return render(request,self.template_name,{"form":form_instance})
 
-
+class EmployeeSignUpView(View):
+    template_name="employee_reg.html"
+    
+    form_class=SignUpForm
         
+    def get(self,request,*args,**kwrgs):
+    
+        form_instance=self.form_class()
+    
+        return render(request,self.template_name,{"form":form_instance})
+    
+    def post(self,request,*args,**kwargs):
+    
+        form_data=request.POST
+        
+        form_instance=self.form_class(form_data) 
+        
+        if form_instance.is_valid():
+            
+            data=form_instance.cleaned_data
+            
+            User.objects.create_user(**data)
+           
+            return redirect("register")
+
+        return render(request,self.template_name,{"form":form_instance})
+            
+class SigninView(View):
+    template_name="signIn.html"
+    form_class=SignInForm
+    
+    def get(self,request,*args,**kwargs):
+       
+        form_instance=self.form_class()
+       
+        return render(request,self.template_name,{"form":form_instance})
+        
+    
 
         
         
