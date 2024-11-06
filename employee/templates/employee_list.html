@@ -1,5 +1,7 @@
 {%extends 'base.html'%}
+
 {%block main_block%}
+
 <div class="container">
     <div>
         <a href="{%url 'employee-add'%}" class="btn btn-primary mb-3 mt-2 ">Add New Employee</a>
@@ -10,6 +12,7 @@
         <th>Email</th>
         <th>Salary</th>
         <th>Department</th>
+        <th>Date of Joining</th>
         <th>Picture</th>
         <th>action</th>
         </tr>
@@ -19,6 +22,7 @@
             <td>{{e.email_id}}</td>
             <td>{{e.salary}}</td>
             <td>{{e.department}}</td>
+            <td>{{e.date_of_joning}}</td>
             <td><img src="{{e.picture.url}}" alt="" height="100" ></td>
             <td>
                 <a href="{%url 'employee-detail' e.id%}">view</a>
